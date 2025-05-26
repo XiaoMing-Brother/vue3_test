@@ -3,11 +3,11 @@
 </template>
 
 <script setup>
-// import autofit from "autofit.js";
+import autofit from "autofit.js";
 
-// onMounted(() => {
-//   autofit.init();
-// });
+onMounted(() => {
+  autofit.init();
+});
 </script>
 
 <style scoped></style>

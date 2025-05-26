@@ -2,8 +2,8 @@
   <div class="sidebar">
     <div class="logo-group">
       <img src="@images/logo.png" alt="" class="logo" />
-      <div class="logo_name">未来科技研究院</div>
-      <div class="logo_name">科技成果管理平台</div>
+      <div class="logo_name">学习强国管理平台</div>
+      <!-- <div class="logo_name">科技成果管理平台</div> -->
     </div>
 
     <div class="menu_list">
@@ -75,7 +75,7 @@ const toPath = (row) => {
     padding-top: 30px;
     height: 100px;
     .logo {
-      width: 51px;
+      width: 87px;
       height: 42px;
       margin-bottom: 13px;
     }
@@ -86,6 +86,7 @@ const toPath = (row) => {
       letter-spacing: 2px;
       color: #004d94;
       display: block;
+      font-family: "douyin";
     }
     .none {
       display: none;

@@ -75,10 +75,6 @@ import { nextTick, onMounted, ref } from "vue";
 import http from "@/utils/axios";
 import router from "@/router";
 import { ElMessage } from "element-plus";
-import autoFontSize from "@/utils/autoFontSize";
-
-//自动设置根字体大小
-autoFontSize();
 
 const verifyCode = ref("");
 
