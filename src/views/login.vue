@@ -98,6 +98,9 @@ const updateVerifyCode = async () => {
 const isSubmitting = ref(false);
 // 登录
 const login = async () => {
+  router.push({ path: "/team" });
+  return;
+
   const requiredFields = [
     { field: "userName", message: "请输入用户名" },
     { field: "passWord", message: "请输入密码" },
@@ -136,7 +139,7 @@ const login = async () => {
 };
 
 onMounted(() => {
-  updateVerifyCode();
+  // updateVerifyCode();
 });
 </script>
 

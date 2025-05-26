@@ -25,8 +25,6 @@ export default defineConfig({
     open: true, // 开发服务器启动时，自动在浏览器中打开应用程序
     proxy: {
       "/api": {
-        // target: "http://192.168.10.34:8001/", // zw
-        // target: "http://192.168.10.70:8001/", //lqz
         target: "http://192.168.10.211:8001/", //测试
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),

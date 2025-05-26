@@ -67,13 +67,13 @@ const router = createRouter({
 
 router.beforeResolve(async (to) => {
   console.log(to);
-  let token = sessionStorage.getItem("token");
-  let login = token ? true : false;
-  if (!login && to.path !== "/login") {
-    router.push({
-      name: "login",
-    });
-  }
+  // let token = sessionStorage.getItem("token");
+  // let login = token ? true : false;
+  // if (!login && to.path !== "/login") {
+  //   router.push({
+  //     name: "login",
+  //   });
+  // }
   const globalStore = useGlobalStore();
   globalStore.setName(to.meta.name);
 });
