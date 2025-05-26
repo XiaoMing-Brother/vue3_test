@@ -242,7 +242,7 @@ const columns = ref([
 
 const listData = ref([]);
 onMounted(() => {
-  handleCurrentChange(1);
+  // handleCurrentChange(1);
   initSort();
 });
 // 点击顶部导航栏 切换页面

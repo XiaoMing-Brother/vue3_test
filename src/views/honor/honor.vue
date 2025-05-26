@@ -152,7 +152,7 @@ const columns = ref([
 
 const listData = ref([]);
 onMounted(() => {
-  getlistPage();
+  // getlistPage();
   initSort();
 });
 // 获取列表

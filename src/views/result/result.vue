@@ -169,7 +169,7 @@ const columns = ref([
 
 const listData = ref([]);
 onMounted(() => {
-  handleCurrentChange(1);
+  // handleCurrentChange(1);
   initSort();
 });
 const query = reactive({

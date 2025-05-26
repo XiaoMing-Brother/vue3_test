@@ -87,7 +87,7 @@ const pageName = ref("编辑成果转化汇总数据");
 onMounted(() => {
   let { activeIndex } = route.query;
 
-  getlistPage();
+  // getlistPage();
 });
 
 const ruleFormRef = ref();

@@ -82,7 +82,7 @@ onMounted(() => {
     activeIndex.value = pageType;
     checkTabbar(pageType);
   } else {
-    getlistPage();
+    // getlistPage();
   }
 
   initSort();
@@ -105,7 +105,7 @@ const checkTabbar = (index) => {
   };
 
   columns.value = columnConfigs[index] || columns.value;
-  getlistPage();
+  // getlistPage();
 };
 
 // 获取列表

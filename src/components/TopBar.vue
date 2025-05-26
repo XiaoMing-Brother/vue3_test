@@ -14,7 +14,7 @@
 
       <el-dropdown>
         <span class="el-dropdown-link">
-          <div class="user_name">{{ userInfo.userName }}</div>
+          <div class="user_name">admin</div>
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
