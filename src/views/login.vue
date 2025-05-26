@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="login_box">
-      <div class="logo">科技成果交易中心</div>
-      <div class="name">杭州市拱墅区工大未来技术研究院</div>
+      <div class="logo">学习强国</div>
+      <div class="name">学习强国管理平台</div>
 
       <div class="working">
         <div class="row">

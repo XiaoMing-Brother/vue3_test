@@ -21,7 +21,7 @@ export default defineConfig({
   assetsInclude: ["**/*.svg"],
   server: {
     host: "0.0.0.0", // 指定服务器应该监听哪个 IP 地址，默认localhost，可设置为'0.0.0.0'或 tru
-    port: 9527, // 端口号，默认5173
+    port: 10086, // 端口号，默认5173
     open: true, // 开发服务器启动时，自动在浏览器中打开应用程序
     proxy: {
       "/api": {
