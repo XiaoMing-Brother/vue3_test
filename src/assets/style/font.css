@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "D-DIN-PRO-SemiBold";
+  src: url("@/assets/fonts/DIN/D-DIN-PRO-600-SemiBold.otf");
+}
+
+@font-face {
+  font-family: "D-DIN-PRO-Bold";
+  src: url("@/assets/fonts/DIN/D-DIN-PRO-700-Bold.otf");
+}
+
+@font-face {
+  font-family: "PangMenZhengDao";
+  src: url("@/assets/fonts/PangMenZhengDao.ttf");
+}
+
+@font-face {
+  font-family: "YouSheBiaoTiHei";
+  src: url("@/assets/fonts/YouSheBiaoTiHei.ttf");
+}
+
+@font-face {
+  font-family: "longzhoufeng-";
+  src: url("@/assets/fonts/LONGZHOUFENG.ttf");
+}
+
+@font-face {
+  font-family: "SourceHanSansCN-Bold";
+  src: url("@/assets/fonts/SourceHanSansCN/SourceHanSansSC-Bold.subset.otf");
+}
+
+@font-face {
+  font-family: "SourceHanSansCN-Light";
+  src: url("@/assets/fonts/SourceHanSansCN/SourceHanSansSC-Light.subset.otf");
+}
+
+@font-face {
+  font-family: "SourceHanSansCN-Medium";
+  src: url("@/assets/fonts/SourceHanSansCN/SourceHanSansSC-Medium.subset.otf");
+}
+
+@font-face {
+  font-family: "SourceHanSansCN-Regular";
+  src: url("@/assets/fonts/SourceHanSansCN/SourceHanSansSC-Regular.subset.otf");
+}
+@font-face {
+  font-family: "douyin";
+  src: url("@/assets/fonts/douyin.OTF");
+}
