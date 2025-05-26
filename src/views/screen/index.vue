@@ -32,10 +32,7 @@ import box5 from "./box/box5.vue";
 import box6 from "./box/box6.vue";
 import box7 from "./box/box7.vue";
 import box8 from "./box/box8.vue";
-import autoFontSize from "@/utils/autoFontSize";
 
-//自动设置根字体大小
-autoFontSize();
 let timer = null;
 
 const box1Ref = ref(null);
