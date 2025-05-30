@@ -6,8 +6,8 @@
     :before-close="handleClose"
   >
     <div class="dia-info">
-      <div class="qr">
-        <div class="qr_div" ref="qr_cord">
+      <div class="qr" ref="qr_cord">
+        <div class="qr_div">
           <div class="title">学习强国</div>
           <img src="@images/icon/bg-icon.png" alt="" class="bg-icon1" />
           <img src="@images/icon/bg-icon.png" alt="" class="bg-icon2" />
@@ -85,7 +85,7 @@ const handleClose = () => {
 const qr_cord = ref(null);
 const exportQrCode = () => {
   var TypeName = props.qrContent;
-  console.log(document.querySelector("#qr_cord"));
+  // console.log(document.querySelector("#qr_cord"));
 
   qrCode(TypeName, qr_cord.value);
 };
