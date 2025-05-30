@@ -1,73 +1,64 @@
-import html2canvas from "html2canvas";
+import html2Canvas from "html2canvas";
 
-/**
- * 将HTML元素转换为圆角PNG图片并下载
- * @param {string} title - 下载文件的名称
- * @param {HTMLElement} html - 要转换的HTML元素
- * @param {object} [options] - 额外配置选项
- * @param {number} [options.radius=40] - 圆角半径
- * @param {number} [options.scale=3] - 缩放比例
- */
-export const qrCode = (title, html, options = {}) => {
-  const { radius = 40, scale = 3, ...html2canvasOptions } = options;
+export const exportQrCode = (title, html) => {
+  console.log(title);
 
-  const defaultOptions = {
-    allowTaint: false,
-    taintTest: false,
-    logging: false,
-    useCORS: true,
-    dpi: window.devicePixelRatio * 1,
-    scale,
-    ...html2canvasOptions,
-  };
-
-  html2canvas(html, defaultOptions)
+  html2Canvas(html, {
+    allowTaint: false, // 不允许污染源
+    taintTest: false, // 不进行污染测试
+    logging: false, // 关闭日志
+    useCORS: true, // 使用CORS加载图像
+    dpi: window.devicePixelRatio * 1, // 设置DPI
+    scale: 3, // 设置缩放比例
+  })
     .then((canvas) => {
-      const roundedCanvas = document.createElement("canvas");
-      const ctx = roundedCanvas.getContext("2d");
+      // 创建一个新的 Canvas 来应用圆角
+      // const roundedCanvas = document.createElement("canvas");
+      // const context = roundedCanvas.getContext("2d");
 
-      // 设置新Canvas尺寸
-      roundedCanvas.width = canvas.width;
-      roundedCanvas.height = canvas.height;
+      // // 设置新 Canvas 的尺寸
+      // roundedCanvas.width = canvas.width;
+      // roundedCanvas.height = canvas.height;
 
-      // 绘制圆角矩形
-      ctx.clearRect(0, 0, roundedCanvas.width, roundedCanvas.height);
-      ctx.beginPath();
-      roundRect(ctx, 0, 0, canvas.width, canvas.height, radius);
-      ctx.clip();
+      // // 在新 Canvas 上绘制圆角矩形
+      // // const radius = 40; // 圆角半径
+      // context.clearRect(0, 0, roundedCanvas.width, roundedCanvas.height);
+      // context.fillStyle = "#ffffff00"; // 背景颜色，必要时设置透明度
+      // context.beginPath();
+      // context.moveTo(radius, 0);
+      // context.arcTo(
+      //   roundedCanvas.width,
+      //   0,
+      //   roundedCanvas.width,
+      //   roundedCanvas.height,
+      //   radius
+      // );
+      // context.arcTo(
+      //   roundedCanvas.width,
+      //   roundedCanvas.height,
+      //   0,
+      //   roundedCanvas.height,
+      //   radius
+      // );
+      // context.arcTo(0, roundedCanvas.height, 0, 0, radius);
+      // context.arcTo(0, 0, roundedCanvas.width, 0, radius);
+      // context.closePath();
+      // context.clip();
 
-      // 绘制原始内容
-      ctx.drawImage(canvas, 0, 0);
+      // // 将原始 Canvas 的内容绘制到新的 Canvas 上
+      // context.drawImage(canvas, 0, 0);
 
-      // 触发下载
-      triggerDownload(roundedCanvas, title);
+      // 将新的 Canvas 转换为图片 URL
+      // const imgURL = roundedCanvas.toDataURL("image/png");
+      const imgURL = canvas.toDataURL("image/png");
+
+      // 创建一个链接并触发下载
+      const link = document.createElement("a");
+      link.href = imgURL;
+      link.download = `${title}.png`;
+      link.click();
     })
     .catch((error) => {
-      console.error("图片转换失败:", error);
-      throw error;
+      console.error("Error during html2canvas conversion:", error);
     });
 };
-
-/**
- * 绘制圆角矩形路径
- */
-function roundRect(ctx, x, y, width, height, radius) {
-  ctx.moveTo(x + radius, y);
-  ctx.arcTo(x + width, y, x + width, y + height, radius);
-  ctx.arcTo(x + width, y + height, x, y + height, radius);
-  ctx.arcTo(x, y + height, x, y, radius);
-  ctx.arcTo(x, y, x + width, y, radius);
-  ctx.closePath();
-}
-
-/**
- * 触发图片下载
- */
-function triggerDownload(canvas, filename) {
-  const link = document.createElement("a");
-  link.href = canvas.toDataURL("image/png");
-  link.download = `${filename}.png`; // 清理文件名
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}

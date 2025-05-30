@@ -7,7 +7,7 @@ export const menuItems = [
     name: "team",
     component: () => import("@/views/team/team.vue"),
     meta: {
-      name: "人才团队数据",
+      name: "二维码下载",
       icon: teamIcon,
     },
   },

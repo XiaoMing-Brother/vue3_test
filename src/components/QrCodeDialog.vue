@@ -24,7 +24,7 @@
       </div>
 
       <div class="btn-box">
-        <el-button type="primary" @click="exportQrCode">下载</el-button>
+        <el-button type="primary" @click="exportQr">下载</el-button>
       </div>
     </div>
   </el-dialog>
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import QrcodeVue from "qrcode.vue";
-import { qrCode } from "@/utils/exportQrCode";
+import { exportQrCode } from "@/utils/exportQrCode";
 
 // Props 定义
 const props = defineProps({
@@ -83,11 +83,10 @@ const handleClose = () => {
 };
 
 const qr_cord = ref(null);
-const exportQrCode = () => {
+const exportQr = () => {
   var TypeName = props.qrContent;
-  // console.log(document.querySelector("#qr_cord"));
 
-  qrCode(TypeName, qr_cord.value);
+  exportQrCode(TypeName, qr_cord.value);
 };
 </script>
 
