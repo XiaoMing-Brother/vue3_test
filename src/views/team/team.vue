@@ -8,19 +8,13 @@
           :prop="item.prop"
           :label="item.label"
         />
-        <el-table-column
-          fixed="right"
-          prop="sort"
-          label="操作"
-          width="160"
-          align="center"
-        >
+        <el-table-column prop="sort" label="操作" width="200" align="center">
           <template #default="scope">
             <el-button link type="primary" @click="showQr(scope.row)">
               查看二维码
             </el-button>
             <el-button link type="primary" @click="downloadSingle(scope.row)">
-              下载
+              下载二维码
             </el-button>
           </template>
         </el-table-column>
@@ -74,8 +68,8 @@ import Sortable from "sortablejs";
 import { ElMessage } from "element-plus";
 import QrCodeDialog from "@/components/QrCodeDialog.vue";
 
-import { exportQrCode } from "@/utils/exportQrCode";
-import { batchDownloadQRCodes } from "@/utils/qrBatchDownload";
+import { exportQrCode, batchDownloadQRCodes } from "@/utils/exportQrCode";
+// import { batchDownloadQRCodes } from "@/utils/qrBatchDownload";
 
 import QrcodeVue from "qrcode.vue";
 
