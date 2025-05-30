@@ -25,39 +25,18 @@
       导出全部二维码 ({{ listData.length }}个)
     </el-button>
 
-    <QrCodeDialog
-      v-model:show="diaShow"
-      :qr-content="qrText"
-      :qr-size="20"
-    ></QrCodeDialog>
+    <!-- 对话框 -->
+    <QrCodeDialog v-model:show="diaShow" :qr-content="qrText" />
 
-    <!-- 隐藏的二维码容器，用于生成下载内容 -->
-    <div
-      class="hidden-qr-container"
-      style="position: absolute; left: -9999px; top: -9999px"
-    >
+    <!-- 隐藏的二维码容器 -->
+    <div class="hidden-qr-container">
       <div
         v-for="item in listData"
         :key="item.id"
-        class="qr-item"
         :id="`qr-${item.id}`"
+        class="qr-item"
       >
-        <div class="qr">
-          <div class="qr_div">
-            <div class="title">学习强国</div>
-            <img src="@images/icon/bg-icon.png" alt="" class="bg-icon1" />
-            <img src="@images/icon/bg-icon.png" alt="" class="bg-icon2" />
-
-            <div class="info">
-              <div class="qr-img">
-                <qrcode-vue :value="item.metricsName || item.id" :size="200" />
-              </div>
-
-              <div class="name">学习强国</div>
-              <div class="company">{{ item.metricsName || item.id }}</div>
-            </div>
-          </div>
-        </div>
+        <QrContent :content="item.metricsName || item.id" />
       </div>
     </div>
   </div>
@@ -67,11 +46,8 @@
 import Sortable from "sortablejs";
 import { ElMessage } from "element-plus";
 import QrCodeDialog from "@/components/QrCodeDialog.vue";
-
+import QrContent from "@/components/QrContent.vue";
 import { exportQrCode, batchDownloadQRCodes } from "@/utils/exportQrCode";
-// import { batchDownloadQRCodes } from "@/utils/qrBatchDownload";
-
-import QrcodeVue from "qrcode.vue";
 
 const columns = ref([
   { prop: "metricsName", label: "指标名称" },
@@ -182,88 +158,14 @@ const downloadAll = async () => {
 <style lang="less" scoped>
 .page_container {
   padding: 25px;
-  /* 添加组件中的样式 */
+
   .hidden-qr-container {
-    .qr {
-      width: 360px;
-      height: 540px;
-      background-color: transparent;
-      margin: 0 auto;
-      box-shadow: 0px 2px 10px 0px rgba(9, 59, 117, 0.24);
-
-      .qr_div {
-        width: 100%;
-        height: 100%;
-        background-color: #004d94;
-        position: relative;
-
-        .title {
-          font-size: 28px;
-          color: #ffffff;
-          padding: 30px;
-        }
-
-        .bg-icon1 {
-          width: 151px;
-          height: 180px;
-          position: absolute;
-          top: 20px;
-          right: 35px;
-          z-index: 0;
-        }
-
-        .bg-icon2 {
-          width: 151px;
-          height: 180px;
-          position: absolute;
-          top: 5px;
-          right: -40px;
-          z-index: 0;
-        }
-
-        .info {
-          width: 360px;
-          height: 430px;
-          background-image: linear-gradient(0deg, #ffffff 0%, #cae4fc 100%),
-            linear-gradient(#ffffff, #ffffff);
-          background-blend-mode: normal, normal;
-          border-radius: 20px 20px 0 0;
-          overflow: hidden;
-          position: absolute;
-          bottom: 0;
-          z-index: 1;
-
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-
-          .qr-img {
-            width: 230px;
-            height: 230px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            border-radius: 20px;
-            img {
-              width: 210px;
-              height: 210px;
-            }
-          }
-
-          .name {
-            font-size: 22px;
-            margin: 20px 0;
-            color: #333333;
-          }
-
-          .company {
-            font-size: 17px;
-            color: #333333;
-          }
-        }
-      }
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    .qr-item {
+      display: inline-block; // 确保每个二维码项正确布局
+      margin: 5px; // 添加一些间距防止渲染问题
     }
   }
 }
