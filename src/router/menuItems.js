@@ -1,4 +1,4 @@
-import teamIcon from "@images/menu/team.svg?url";
+import teamIcon from "@images/menu/QRcode.svg?url";
 
 export const menuItems = [
   {
