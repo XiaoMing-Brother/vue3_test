@@ -16,6 +16,20 @@
         <el-table-column
           fixed="right"
           prop="sort"
+          label="操作"
+          width="80"
+          align="center"
+        >
+          <template #default="scope">
+            <el-button link type="primary" @click="showQr(scope.row)"
+              >二维码</el-button
+            >
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          fixed="right"
+          prop="sort"
           label=""
           width="80"
           align="center"
@@ -35,51 +49,38 @@
         </el-table-column>
       </el-table>
     </div>
+
+    <qrCode v-model:show="diaShow" :qr-content="qrText" :qr-size="20"></qrCode>
   </div>
 </template>
 
 <script setup>
-import http from "@/utils/axios";
+// import http from "@/utils/axios";
 import router from "@/router";
-import { ref, nextTick } from "vue";
 import Sortable from "sortablejs";
 import { ElMessage } from "element-plus";
+import qrCode from "@/components/qRCode.vue";
+
+const diaShow = ref(false);
+const qrText = ref("");
+const showQr = (row) => {
+  diaShow.value = true;
+  qrText.value = row.metricsName;
+};
 
 const columns = ref([
   { prop: "metricsName", label: "指标名称" },
   { prop: "metricsValue", label: "数量" },
 ]);
 
-const listData = ref([]);
+const listData = ref([
+  { metricsName: "指标1", metricsValue: 1 },
+  { metricsName: "指标2", metricsValue: 2 },
+  { metricsName: "指标3", metricsValue: 3 },
+]);
 onMounted(() => {
-  // getlistPage();
   initSort();
 });
-
-// 获取列表
-const getlistPage = async () => {
-  listData.value = [];
-
-  let res = await http.post("/sys/screenTeam/getScreenTeamList", {});
-  let list = res.data.list;
-
-  listData.value = list;
-};
-
-// 排序
-const setSort = async () => {
-  let query = listData.value.map((item, index) => ({
-    id: item.id,
-    sort: index + 1,
-  }));
-
-  let res = await http.post("/sys/screenTeam/sort", query);
-  if (res.code === 0) {
-    ElMessage.success("排序成功");
-  } else {
-    ElMessage.error("排序失败");
-  }
-};
 
 // 创建拖拽实例
 const initSort = () => {
@@ -119,7 +120,6 @@ const setNodeSort = (oldIndex, newIndex) => {
     }
     //提交后后台数据进行排序
     console.log(" 更新后的列表数据:", listData.value);
-    setSort();
   });
 };
 

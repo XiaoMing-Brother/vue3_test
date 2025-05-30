@@ -6,7 +6,7 @@
 import autofit from "autofit.js";
 
 onMounted(() => {
-  autofit.init();
+  // autofit.init();
 });
 </script>
 

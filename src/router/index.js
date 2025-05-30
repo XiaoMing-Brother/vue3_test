@@ -9,12 +9,6 @@ const baseRoutes = [
     name: "login",
     component: () => import("@/views/login.vue"),
   },
-  // 驾驶舱
-  {
-    path: "/screen",
-    name: "screen",
-    component: () => import("@/views/screen/index.vue"),
-  },
 ];
 
 // 带有图标的主路由和子路由
@@ -27,32 +21,6 @@ const iconRoutes = [
     children: [
       // 1. 带图标的菜单路由
       ...menuItems,
-
-      // 2. 不需要菜单的子路由（如 editTeam）
-      {
-        path: "/team/editTeam",
-        name: "editTeam",
-        component: () => import("@/views/team/editTeam.vue"),
-        meta: {
-          name: "人才团队数据",
-        },
-      },
-      {
-        path: "/science/editScience",
-        name: "editScience",
-        component: () => import("@/views/science/editScience.vue"),
-        meta: {
-          name: "科创落地介绍",
-        },
-      },
-      {
-        path: "/result/editResult",
-        name: "editResult",
-        component: () => import("@/views/result/editResult.vue"),
-        meta: {
-          name: "成果转化数据",
-        },
-      },
     ],
   },
 ];
