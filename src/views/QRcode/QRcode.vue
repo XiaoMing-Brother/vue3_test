@@ -45,8 +45,8 @@
 <script setup>
 import Sortable from "sortablejs";
 import { ElMessage } from "element-plus";
-import QrCodeDialog from "@/components/QrCodeDialog.vue";
-import QrContent from "@/components/QrContent.vue";
+import QrCodeDialog from "./components/QrCodeDialog.vue";
+import QrContent from "./components/QrContent.vue";
 import { exportQrCode, batchDownloadQRCodes } from "@/utils/exportQrCode";
 
 const columns = ref([

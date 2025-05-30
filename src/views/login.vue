@@ -98,7 +98,7 @@ const updateVerifyCode = async () => {
 const isSubmitting = ref(false);
 // 登录
 const login = async () => {
-  router.push({ path: "/team" });
+  router.push({ path: "/QRcode" });
   return;
 
   const requiredFields = [
@@ -129,7 +129,7 @@ const login = async () => {
 
       setTimeout(() => {
         ElMessage.success("登录成功");
-        router.push({ path: "/team" });
+        router.push({ path: "/QRcode" });
       }, 100);
     } else {
       form.value.captchaCode = "";
