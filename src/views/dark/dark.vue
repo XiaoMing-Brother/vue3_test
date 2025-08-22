@@ -1,5 +1,5 @@
 <template>
-  <div class="dark">黑暗模式</div>
+  <div class="page-content">黑暗模式</div>
 </template>
 
 <script setup></script>

@@ -165,10 +165,10 @@ html.dark {
 :root {
   --art-card-border: rgba(var(--art-gray-300-rgb), 0.6); // 卡片边框颜色
   --art-card-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04); // 卡片阴影
-  
+
   // 全局自定义圆角设置
   --custom-radius: 0.375rem; // 默认圆角 6px
-  
+
   // 布局相关变量
   --layout-header-height: 64px; // TopBar高度
   --layout-sidebar-width: 240px; // 侧边栏宽度

@@ -14,8 +14,6 @@
 import imgUrl from "@/assets/images/svg/403.svg";
 
 defineOptions({ name: "Exception403" });
-
-
 </script>
 
 <style lang="scss" scoped></style>
