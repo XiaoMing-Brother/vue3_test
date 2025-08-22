@@ -1,41 +1,25 @@
 <template>
-  <div class="page_container">
+  <div class="page-content">
     <div class="table_box">
       <el-table class="elTable" key="id" :data="listData">
-        <el-table-column
-          v-for="item in columns"
-          :key="item.prop"
-          :prop="item.prop"
-          :label="item.label"
-        />
+        <el-table-column v-for="item in columns" :key="item.prop" :prop="item.prop" :label="item.label" />
         <el-table-column prop="sort" label="操作" width="200" align="center">
           <template #default="scope">
-            <el-button link type="primary" @click="showQr(scope.row)">
-              查看二维码
-            </el-button>
-            <el-button link type="primary" @click="downloadSingle(scope.row)">
-              下载二维码
-            </el-button>
+            <el-button link type="primary" @click="showQr(scope.row)"> 查看二维码 </el-button>
+            <el-button link type="primary" @click="downloadSingle(scope.row)"> 下载二维码 </el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <!-- 导出按钮 -->
-    <el-button type="primary" @click="downloadAll">
-      导出全部二维码 ({{ listData.length }}个)
-    </el-button>
+    <el-button type="primary" @click="downloadAll"> 导出全部二维码 ({{ listData.length }}个) </el-button>
 
     <!-- 对话框 -->
     <QrCodeDialog v-model:show="diaShow" :qr-content="qrText" />
 
     <!-- 隐藏的二维码容器 -->
     <div class="hidden-qr-container">
-      <div
-        v-for="item in listData"
-        :key="item.id"
-        :id="`qr-${item.id}`"
-        class="qr-item"
-      >
+      <div v-for="item in listData" :key="item.id" :id="`qr-${item.id}`" class="qr-item">
         <QrContent :content="item.metricsName || item.id" />
       </div>
     </div>
@@ -73,9 +57,7 @@ onMounted(() => {
 
 // 创建拖拽实例
 const initSort = () => {
-  const table = document.querySelector(
-    ".elTable .el-table__body-wrapper tbody"
-  );
+  const table = document.querySelector(".elTable .el-table__body-wrapper tbody");
   Sortable.create(table, {
     group: "shared",
     animation: 150,
@@ -144,9 +126,7 @@ const downloadAll = async () => {
     });
 
     if (result.failedCount > 0) {
-      ElMessage.warning(
-        `成功下载 ${result.successCount} 个二维码，${result.failedCount} 个失败`
-      );
+      ElMessage.warning(`成功下载 ${result.successCount} 个二维码，${result.failedCount} 个失败`);
     } else {
       ElMessage.success(`成功下载 ${result.successCount} 个二维码`);
     }
@@ -157,8 +137,10 @@ const downloadAll = async () => {
 </script>
 
 <style lang="less" scoped>
-.page_container {
+.page-content {
   padding: 25px;
+  background: var(--art-main-bg-color);
+  // min-height: calc(-151px + 100vh);
 
   .hidden-qr-container {
     position: absolute;

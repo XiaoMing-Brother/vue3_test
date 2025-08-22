@@ -6,7 +6,7 @@ const baseRoutes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/login.vue"),
+    component: () => import("@/views/login/login.vue"),
   },
 ];
 
@@ -14,8 +14,9 @@ const baseRoutes = [
 const mainRoutes = [
   {
     path: "/",
-    component: () => import("@/views/index.vue"),
-    redirect: "/QRcode",
+    component: () => import("@/views/index/index.vue"),
+
+    redirect: "/workspace",
     children: [...menuItems],
   },
 ];

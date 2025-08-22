@@ -1,0 +1,61 @@
+@use "@/assets/styles/variables" as *;
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--art-bg-color);
+  position: relative;
+  overflow: hidden;
+
+  // 侧边栏
+  .layout-sidebar {
+    width: var(--layout-sidebar-width);
+    background: var(--art-main-bg-color);
+    border-right: 1px solid var(--art-card-border);
+    transition: width var(--layout-transition-duration) var(--layout-transition-timing);
+    position: relative;
+    z-index: 200;
+    flex-shrink: 0;
+  }
+
+  // 主内容区域
+  .layout-content {
+    flex: 1;
+
+    // 头部
+    .layout-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 200;
+      // background-color: var(--art-bg-color) !important;
+    }
+
+    // 页面内容
+    .layout-page {
+      overflow: hidden;
+      box-sizing: border-box;
+      width: calc(100% - 40px);
+      margin: auto;
+      margin-top: var(--layout-header-height);
+
+      // 子页面默认style
+      :deep(.page-content) {
+        position: relative;
+        box-sizing: border-box;
+        padding: 20px;
+        overflow: hidden;
+        background: var(--art-main-bg-color);
+        border-radius: calc(var(--custom-radius) / 2 + 2px) !important;
+        min-height: calc(-85px + 100vh);
+      }
+    }
+  }
+
+  // 折叠状态
+  &.layout-collapsed {
+    .layout-sidebar {
+      width: var(--layout-sidebar-collapsed-width);
+    }
+  }
+}

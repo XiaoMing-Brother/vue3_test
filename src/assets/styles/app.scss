@@ -275,36 +275,8 @@
   border-radius: calc(var(--custom-radius) / 2) !important;
 }
 
-.el-input__wrapper {
-  border-radius: calc(var(--custom-radius) / 2) !important;
-}
-
-.el-select .el-input__wrapper {
-  border-radius: calc(var(--custom-radius) / 2) !important;
-}
-
 .el-dialog {
   border-radius: calc(var(--custom-radius) * 1.5) !important;
-}
-
-.el-drawer {
-  // border-radius: var(--custom-radius) !important;
-}
-
-.el-popover {
-  border-radius: var(--custom-radius) !important;
-}
-
-.el-tooltip__popper {
-  border-radius: calc(var(--custom-radius) / 2) !important;
-}
-
-.el-dropdown-menu {
-  border-radius: var(--custom-radius) !important;
-}
-
-.el-table {
-  border-radius: var(--custom-radius) !important;
 }
 
 .el-pagination {
