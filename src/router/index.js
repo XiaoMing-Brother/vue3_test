@@ -1,8 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { useGlobalStore } from "@/store/global";
-import { menuItems } from "./menuItems"; // 导入抽离的数据
+import { menuItems } from "./menuItems";
 
-// 基础路由（不需要图标的路由）
+// 基础路由
 const baseRoutes = [
   {
     path: "/login",
@@ -11,22 +10,18 @@ const baseRoutes = [
   },
 ];
 
-// 带有图标的主路由和子路由
-const iconRoutes = [
+// 主路由和子路由
+const mainRoutes = [
   {
     path: "/",
     component: () => import("@/views/index.vue"),
-    redirect: "/team",
-
-    children: [
-      // 1. 带图标的菜单路由
-      ...menuItems,
-    ],
+    redirect: "/QRcode",
+    children: [...menuItems],
   },
 ];
 
-// 合并路由
-const routes = [...baseRoutes, ...iconRoutes];
+// 合并所有路由
+const routes = [...baseRoutes, ...mainRoutes];
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -42,6 +37,9 @@ router.beforeResolve(async (to) => {
   //     name: "login",
   //   });
   // }
+  // 动态导入避免循环依赖
+  const { useGlobalStore } = await import("@/store/modules/global");
+
   const globalStore = useGlobalStore();
   globalStore.setName(to.meta.name);
 });

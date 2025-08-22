@@ -62,8 +62,8 @@ instance.interceptors.response.use(
     return data;
   },
   (errors) => {
-    if (errors.respon) {
-      let { status, data } = response;
+    if (errors.response) {
+      let { status, data } = errors.response;
       if (status == 401) {
         ElMessage({ message: "登录信息已过期，请重新登录！", type: "error" });
         sessionStorage.setItem("quit", Date.now());

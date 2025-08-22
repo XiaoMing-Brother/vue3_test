@@ -36,7 +36,7 @@ defineProps({
   .qr_div {
     width: 100%;
     height: 100%;
-    background-color: #004d94;
+    background-color: var(--el-color-primary);
     position: relative;
 
     .title {
@@ -66,10 +66,10 @@ defineProps({
     .info {
       width: 360px;
       height: 430px;
-      background-image: linear-gradient(0deg, #ffffff 0%, #cae4fc 100%),
+      background-image: linear-gradient(0deg, #ffffff 0%, var(--el-color-primary-light-9) 100%),
         linear-gradient(#ffffff, #ffffff);
       background-blend-mode: normal, normal;
-      border-radius: 20px 20px 0 0;
+      border: 1px solid var(--art-card-border) !important;
       overflow: hidden;
       position: absolute;
       bottom: 0;
@@ -87,7 +87,7 @@ defineProps({
         justify-content: center;
         align-items: center;
         background-color: #fff;
-        border-radius: 20px;
+        border: 1px solid var(--art-card-border) !important;
         img {
           width: 210px;
           height: 210px;

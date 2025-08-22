@@ -1,11 +1,16 @@
 import { defineConfig } from "vite";
 import path from "path";
+import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
 import VueDevTools from "vite-plugin-vue-devtools";
 import AutoImport from "unplugin-auto-import/vite"; // 按需自动加载API插件
-
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import postCssPxToRem from "postcss-pxtorem";
+
+// 获取当前文件的目录路径
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   root: process.cwd(), // 项目根目录（index.html 文件所在的位置）
@@ -15,7 +20,21 @@ export default defineConfig({
     VueDevTools(),
     vue(),
     svgLoader(), // 添加 SVG Loader
-    AutoImport({ imports: ["vue", "vue-router"] }),
+    AutoImport({
+      imports: ["vue", "vue-router"],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: "sass",
+        }),
+      ],
+    }),
+    Components({
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: "sass",
+        }),
+      ],
+    }),
   ],
 
   assetsInclude: ["**/*.svg"],
@@ -30,21 +49,19 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
-    // "/ws": {
-    //   // target: "ws://192.168.10.34:8090/", // zw
-    //   // target: "ws://192.168.10.70:8090/", //lqz
-    //   target: "ws://119.45.247.57/", //测试
-    //   ws: true, // 启用 WebSocket 代理
-    //   changeOrigin: true,
-    // },
   },
+
   resolve: {
     // 文件路径别名，当使用文件系统路径的别名时，请始终使用绝对路径。
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@style": path.resolve(__dirname, "./src/assets/style"),
+      "@views": path.resolve(__dirname, "./src/views"),
       "@images": path.resolve(__dirname, "./src/assets/images"),
-      "@audio": path.resolve(__dirname, "./src/assets/audio"),
+      // "@icons": path.resolve(__dirname, "./src/assets/icons"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+      "@stores": path.resolve(__dirname, "./src/store"),
+      // "@plugins": path.resolve(__dirname, "./src/plugins"),
+      "@styles": path.resolve(__dirname, "./src/assets/styles"),
     },
     // 导入时想要省略的扩展名列表。 vite官方不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
     extensions: [".mjs", ".js", ".mts", ".ts", ".jsx", ".tsx", ".json"],
@@ -52,8 +69,11 @@ export default defineConfig({
 
   css: {
     preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
+      scss: {
+        api: "modern-compiler",
+        additionalData: `
+            @use "@styles/variables.scss" as *; @use "@styles/mixin.scss" as *;
+          `,
       },
     },
     // devSourcemap: true, // 可以查看 CSS 的源码

@@ -11,41 +11,47 @@
         <router-view></router-view>
       </div>
     </div>
+
+    <!-- 全局设置面板 -->
+    <SettingsPanel />
   </div>
 </template>
 
 <script setup>
-import SideBar from "@/components/SideBar.vue";
-import TopBar from "@/components/TopBar.vue";
+import SideBar from "@/components/layouts/SideBar.vue";
+import TopBar from "@/components/layouts/TopBar.vue";
+import SettingsPanel from "@/components/layouts/settings-panel/SettingsPanel.vue";
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .layout {
   display: flex;
   height: 100vh;
+  background: var(--art-bg-color);
 
   .layout-silder {
+    background: var(--art-main-bg-color);
+    border-right: 1px solid var(--art-card-border) !important;
   }
   .layout-content {
     flex: 1;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    background-color: #edf6ff;
 
     .layout-header {
       position: fixed;
       top: 0;
       z-index: 1;
       width: calc(100% - 200px);
-      background-color: #eff8f7;
     }
 
     .layout-page {
       flex: 1;
-      margin: 80px 20px 20px;
-      background-color: #fff;
-      border-radius: 10px;
+      margin: 60px 20px 20px;
+      background: var(--art-main-bg-color);
+      border-radius: calc(var(--custom-radius) / 2 + 2px) !important;
+      border: 1px solid var(--art-card-border) !important;
     }
   }
 }

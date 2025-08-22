@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import { ref, nextTick, onMounted } from "vue";
 import Sortable from "sortablejs";
 import { ElMessage } from "element-plus";
 import QrCodeDialog from "./components/QrCodeDialog.vue";
