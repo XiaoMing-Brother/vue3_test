@@ -120,10 +120,17 @@ const isChildActive = (item) => {
 
 // 自动展开包含激活子菜单的父菜单
 const autoExpandParentMenu = () => {
-  if (activeParentMenuItem.value && activeParentMenuItem.value.children) {
-    const parentId = activeParentMenuItem.value.id;
-    if (!expandedMenus.value.includes(parentId)) {
-      expandedMenus.value = [parentId];
+  const currentPath = route.path;
+  expandedMenus.value = [];
+  
+  // 只展开包含当前激活子菜单的父菜单
+  for (const item of menuItems) {
+    if (item.children) {
+      const hasActiveChild = item.children.some(child => child.path === currentPath);
+      if (hasActiveChild) {
+        expandedMenus.value = [item.id];
+        break; // 只展开一个父菜单
+      }
     }
   }
 };
@@ -134,14 +141,14 @@ const toggleMenu = (item) => {
     // 有子菜单，切换展开状态
     const index = expandedMenus.value.indexOf(item.id);
     if (index > -1) {
+      // 如果当前菜单已展开，则收起
       expandedMenus.value.splice(index, 1);
     } else {
       // 关闭其他展开的菜单，只保持当前菜单展开
       expandedMenus.value = [item.id];
     }
   } else {
-    // 没有子菜单，直接跳转并关闭所有展开的菜单
-    expandedMenus.value = [];
+    // 没有子菜单，直接跳转
     toPath(item);
   }
 };
@@ -151,18 +158,8 @@ const toPath = (row) => {
   const { path } = row;
 
   if (path) {
-    // 检查是否是子菜单项
-    const parentMenu = menuItems.find((item) => item.children && item.children.some((child) => child.path === path));
-
-    if (parentMenu) {
-      // 是子菜单，保持父菜单展开
-      expandedMenus.value = [parentMenu.id];
-    } else {
-      // 不是子菜单，关闭所有展开的菜单
-      expandedMenus.value = [];
-    }
-
     router.push({ path });
+    // 路由变化后会自动触发 autoExpandParentMenu 来处理展开状态
   }
 };
 
