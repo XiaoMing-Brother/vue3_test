@@ -3,7 +3,6 @@
     <div class="logo-group">
       <img src="@images/logo.png" alt="" class="logo" />
       <div class="logo_name">学习强国管理平台</div>
-      <!-- <div class="logo_name">科技成果管理平台</div> -->
     </div>
 
     <div class="menu_list">
@@ -13,14 +12,11 @@
           @click="toggleMenu(item)"
           class="menu"
           :class="{
-            active: item.id == menuParentId || (item.children && isChildActive(item)),
+            active: isMenuActive(item),
             'has-children': item.children && item.children.length > 0,
           }">
           <div class="icon_box">
-            <imgSvg
-              :src="item.meta.icon"
-              :active="item.id == menuParentId || (item.children && isChildActive(item))"
-              class="imgSvg" />
+            <imgSvg :src="item.meta.icon" :active="isMenuActive(item)" class="imgSvg" />
           </div>
           <span class="name">{{ item.meta.name }}</span>
           <!-- 展开/收起箭头 -->
@@ -41,7 +37,7 @@
             v-for="child in item.children"
             :key="child.id"
             @click="toPath(child)"
-            :class="{ active: child.id == menuParentId }">
+            :class="{ active: activeMenuItem?.id === child.id }">
             <span class="submenu-name">{{ child.meta.name }}</span>
           </div>
         </div>
@@ -52,12 +48,13 @@
 
 <script setup>
 import imgSvg from "@/components/layouts/imgSvg.vue";
-
 import { ArrowDown } from "@element-plus/icons-vue";
-
 import { menuItems } from "@/router/menuItems"; // 导入菜单路由数据
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { ref, computed, watch, onMounted } from "vue";
+
 const router = useRouter();
+const route = useRoute();
 
 import { api } from "@/utils/config";
 const fileUrl = ref(api + "/files");
@@ -65,32 +62,70 @@ const fileUrl = ref(api + "/files");
 // 展开的菜单列表
 const expandedMenus = ref([]);
 
-onMounted(() => {
-  let menuId = sessionStorage.getItem("menuParentId");
-  if (menuId) {
-    menuParentId.value = parseInt(menuId);
-    // 如果当前激活的是子菜单，自动展开父菜单
-    autoExpandParentMenu();
-  }
-});
+// 基于当前路由计算活跃的菜单项
+const activeMenuItem = computed(() => {
+  const currentPath = route.path;
 
-const menuParentId = ref(1);
+  // 先查找直接匹配的菜单项
+  for (const item of menuItems) {
+    if (item.path === currentPath) {
+      return item;
+    }
 
-// 自动展开包含激活子菜单的父菜单
-const autoExpandParentMenu = () => {
-  menuItems.forEach((item) => {
-    if (item.children && item.children.some((child) => child.id == menuParentId.value)) {
-      if (!expandedMenus.value.includes(item.id)) {
-        expandedMenus.value.push(item.id);
+    // 查找子菜单中的匹配项
+    if (item.children) {
+      for (const child of item.children) {
+        if (child.path === currentPath) {
+          return child;
+        }
       }
     }
-  });
+  }
+
+  return null;
+});
+
+// 基于当前路由计算活跃的父菜单项
+const activeParentMenuItem = computed(() => {
+  const currentPath = route.path;
+
+  // 查找包含当前路由的父菜单
+  for (const item of menuItems) {
+    if (item.path === currentPath) {
+      return item;
+    }
+
+    if (item.children) {
+      for (const child of item.children) {
+        if (child.path === currentPath) {
+          return item; // 返回父菜单
+        }
+      }
+    }
+  }
+
+  return null;
+});
+
+// 检查菜单项是否处于激活状态
+const isMenuActive = (item) => {
+  return activeMenuItem.value?.id === item.id || (activeParentMenuItem.value?.id === item.id && item.children);
 };
 
 // 检查是否有子菜单处于激活状态
 const isChildActive = (item) => {
   if (!item.children) return false;
-  return item.children.some((child) => child.id == menuParentId.value);
+  return activeParentMenuItem.value?.id === item.id;
+};
+
+// 自动展开包含激活子菜单的父菜单
+const autoExpandParentMenu = () => {
+  if (activeParentMenuItem.value && activeParentMenuItem.value.children) {
+    const parentId = activeParentMenuItem.value.id;
+    if (!expandedMenus.value.includes(parentId)) {
+      expandedMenus.value = [parentId];
+    }
+  }
 };
 
 // 切换菜单展开/收起
@@ -113,16 +148,11 @@ const toggleMenu = (item) => {
 
 // 点击菜单跳转路由
 const toPath = (row) => {
-  let { id, path } = row;
+  const { path } = row;
 
-  sessionStorage.setItem("menuParentId", id);
-  sessionStorage.removeItem("pageType");
-  menuParentId.value = id;
-
-  // 如果点击的是子菜单，保持父菜单展开状态
   if (path) {
     // 检查是否是子菜单项
-    const parentMenu = menuItems.find((item) => item.children && item.children.some((child) => child.id === id));
+    const parentMenu = menuItems.find((item) => item.children && item.children.some((child) => child.path === path));
 
     if (parentMenu) {
       // 是子菜单，保持父菜单展开
@@ -135,6 +165,19 @@ const toPath = (row) => {
     router.push({ path });
   }
 };
+
+// 监听路由变化，自动展开相应的父菜单
+watch(
+  route,
+  () => {
+    autoExpandParentMenu();
+  },
+  { immediate: true }
+);
+
+onMounted(() => {
+  autoExpandParentMenu();
+});
 </script>
 
 <style lang="scss" scoped>

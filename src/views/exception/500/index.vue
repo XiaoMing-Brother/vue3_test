@@ -11,21 +11,11 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import imgUrl from "@images/svg/403.svg";
+import imgUrl from "@/assets/images/svg/500.svg";
 
-defineOptions({ name: "Exception403" });
+defineOptions({ name: "Exception500" });
 
-const router = useRouter();
 
-// 添加返回上一页的功能
-const goBack = () => {
-  if (window.history.length > 1) {
-    router.go(-1);
-  } else {
-    router.push("/");
-  }
-};
 </script>
 
 <style lang="scss" scoped></style>
