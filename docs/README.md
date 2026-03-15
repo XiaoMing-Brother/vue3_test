@@ -130,22 +130,21 @@ HTTP 工具和 API 开发指南，包含：
 ## 🔗 相关链接
 
 - **[项目仓库](../README.md)** - 项目主页
-- **[在线演示](https://your-demo-url.com)** - 在线演示地址
-- **[问题反馈](https://github.com/your-repo/issues)** - GitHub Issues
-- **[更新日志](../CHANGELOG.md)** - 版本更新记录
+- **在线演示** - 如有演示地址请补充
+- **问题反馈** - 如有仓库地址请补充 Issue 链接
 
 ## 📞 联系方式
 
 如有问题或建议，请通过以下方式联系：
 
-- 📧 邮箱: your-email@example.com
-- 💬 讨论区: [GitHub Discussions](https://github.com/your-repo/discussions)
-- 🐛 问题反馈: [GitHub Issues](https://github.com/your-repo/issues)
+- 📧 邮箱: （待补充）
+- 💬 讨论区: （待补充）
+- 🐛 问题反馈: （待补充）
 
 ---
 
 **祝您开发愉快！** 🎉
 
-_最后更新时间: 2024 年 12 月_
+_最后更新时间: 2026 年 3 月 15 日_
 
 

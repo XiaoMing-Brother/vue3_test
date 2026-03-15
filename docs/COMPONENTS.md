@@ -2,7 +2,7 @@
 
 ## 概述
 
-本项目的组件开发遵循 Vue 3 Composition API 的最佳实践，使用 TypeScript 和 SCSS 进行开发。
+本项目的组件开发遵循 Vue 3 Composition API 的最佳实践，当前以 JavaScript 为主，样式使用 SCSS/Less。TypeScript 可按需引入。
 
 ## 组件结构
 
@@ -645,6 +645,8 @@ const handleAsyncOperation = async () => {
 
 ### 4. 类型安全
 
+如果你引入了 TypeScript，可以参考以下写法：
+
 ```typescript
 // 使用 TypeScript 定义类型
 interface User {
@@ -684,6 +686,8 @@ export default {
 ```
 
 ## 测试
+
+项目未内置测试框架，如需测试可自行引入（示例如下）。
 
 ### 单元测试示例
 

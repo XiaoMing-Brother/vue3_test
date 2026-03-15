@@ -10,7 +10,7 @@
 - 🔧 **主题定制** - 支持自定义主题色和圆角设置
 - 📊 **丰富功能** - 包含工作台、二维码生成、异常处理等多个功能模块
 - 🚀 **现代化构建** - 基于 Vite 的快速构建和热更新
-- 🔐 **权限管理** - 完整的路由权限和用户认证系统
+- 🔐 **权限管理** - 路由守卫与登录流程已预留（当前示例以本地跳转为主）
 - 📦 **批量导出** - 支持二维码批量下载和 ZIP 压缩
 - 🎭 **拖拽排序** - 表格数据拖拽排序功能
 - 💾 **状态持久化** - 使用 Pinia 进行状态管理，支持本地存储
@@ -213,15 +213,14 @@ src/
 
 ### 🔐 权限管理
 
-- 路由权限控制
-- 用户认证系统
-- 登录状态管理
-- 权限验证中间件
+- 路由守卫示例（当前登录校验逻辑为注释状态）
+- 登录页提供基础表单与验证码示例
+- 登录成功后本地跳转到 `/workspace`
 
 ## 运行环境要求
 
-- **Node.js**: `^20.19.0` 或更高版本
-- **pnpm**: `^10.14.0` 或更高版本
+- **Node.js**: `>=16.0.0`
+- **pnpm**: `>=8.0.0`（项目 packageManager: `pnpm@8.15.0`）
 - **浏览器**: 支持 ES6+ 的现代浏览器
 
 ## 快速开始
@@ -230,7 +229,7 @@ src/
 
 ```bash
 git clone <repository-url>
-cd 测试工程
+cd <project-dir>
 ```
 
 ### 2. 安装依赖
@@ -257,7 +256,7 @@ pnpm dev
 
 ```bash
 # 构建用于生产环境的版本
-pnpm build:prod
+pnpm build
 
 # 预览构建结果
 pnpm preview
@@ -272,18 +271,19 @@ pnpm preview
 pnpm dev
 
 # 启动开发服务器 (指定端口)
-pnpm dev --port 3000
+pnpm dev -- --port 3000
 
 # 启动开发服务器 (指定主机)
-pnpm dev --host 0.0.0.0
+pnpm dev -- --host 0.0.0.0
 ```
 
 开发服务器配置：
 
 - **端口**: 10086
+- **主机**: 0.0.0.0
 - **自动打开浏览器**: 是
 - **热更新**: 支持
-- **代理配置**: API 请求代理到测试服务器
+- **代理配置**: `/api` 请求代理到 `http://192.168.10.211:8001/`（自动去除 `/api` 前缀）
 - **源码映射**: 支持
 
 ### 🏗 构建相关
@@ -294,22 +294,21 @@ pnpm build
 
 # 构建并预览
 pnpm build && pnpm preview
-
-# 构建开发环境版本
-pnpm build:dev
 ```
 
 ### 🔧 其他脚本
 
 ```bash
-# 批准构建脚本 (解决 esbuild 权限问题)
-pnpm approve-builds
-
-# 清理构建缓存
+# 清理 pnpm store 缓存
 pnpm clean
 
-# 类型检查
-pnpm type-check
+# 更新依赖
+pnpm update
+
+# 依赖管理
+pnpm add <pkg>
+pnpm add -D <pkg>
+pnpm remove <pkg>
 ```
 
 ## ⚙️ 配置说明
@@ -648,7 +647,7 @@ pnpm preview
 1. **构建生产版本**
 
 ```bash
-pnpm build:prod
+pnpm build
 ```
 
 2. **部署到服务器**
@@ -715,21 +714,21 @@ docker run -d -p 80:80 vue-admin
 
 ### 开发环境
 
-- 确保 Node.js 版本 >= 16.0
-- 推荐使用 pnpm 作为包管理器
-- 开发服务器默认运行在 10086 端口
-- 确保后端 API 服务器正常运行
+- Node.js 版本 `>=16.0.0`
+- pnpm 版本 `>=8.0.0`
+- 开发服务器默认运行在 `10086` 端口
+- 如需联调后端，确认代理目标地址可访问
 
 ### 构建相关
 
-- 构建前确保所有依赖已正确安装
-- 如遇到 `esbuild` 相关错误，运行 `pnpm approve-builds`
-- 生产构建会自动移除 console 和 debugger 语句
+- 构建前确保依赖安装完成
+- 生产构建会移除 `console` 和 `debugger`
 - 构建后的文件在 `dist` 目录
+- `vite.config.js` 中 `emptyOutDir` 为 `false`，不会自动清空旧构建文件
 
 ### 样式开发
 
-- 使用 SCSS 预处理器
+- 使用 SCSS/Less 预处理器（如遇 Less 编译错误，可安装 `less` 依赖）
 - 支持 CSS 变量和混入
 - 推荐使用 rem 单位以支持响应式
 - 全局样式变量在 `src/assets/styles/variables.scss`
@@ -752,9 +751,9 @@ docker run -d -p 80:80 vue-admin
 
 ## 🐛 常见问题
 
-### Q: 构建时出现 esbuild 错误？
+### Q: 依赖安装失败或构建报错？
 
-**A**: 运行 `pnpm approve-builds` 命令批准构建脚本执行权限。
+**A**: 确保 Node.js `>=16.0.0` 且 pnpm `>=8.0.0`，必要时执行 `pnpm clean` 后重新安装依赖。
 
 ### Q: 样式不生效？
 
@@ -824,10 +823,9 @@ docker run -d -p 80:80 vue-admin
 
 ### 代码规范
 
-- 使用 ESLint 进行代码检查
 - 遵循 Vue 3 官方风格指南
-- 使用 TypeScript 类型注解（可选）
-- 编写单元测试（推荐）
+- 本项目以 JavaScript 为主，TypeScript 可按需引入
+- 单元测试尚未内置，可按需接入
 
 ## 📞 联系方式
 
@@ -840,4 +838,4 @@ docker run -d -p 80:80 vue-admin
 
 **开发愉快！** 🎉
 
-_最后更新时间: 2024 年 12 月_
+_最后更新时间: 2026 年 3 月 15 日_

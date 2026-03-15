@@ -16,10 +16,14 @@
 ├── public/                  # 静态资源目录
 │   └── favicon.ico         # 网站图标
 ├── src/                     # 源代码目录
+├── .gitignore               # Git 忽略规则
+├── .npmrc                   # npm 配置
 ├── index.html              # 主页面模板
 ├── package.json            # 项目配置文件
+├── package-lock.json        # npm 锁定文件
 ├── pnpm-lock.yaml          # pnpm 锁定文件
 ├── pnpm-workspace.yaml     # pnpm 工作区配置
+├── PNPM_README.md           # pnpm 使用说明
 ├── README.md               # 项目说明文档
 └── vite.config.js          # Vite 构建配置
 ```
@@ -258,7 +262,7 @@ store/
 
 - 模块化状态管理
 - 支持持久化
-- TypeScript 支持
+- TypeScript 可选
 
 **示例**:
 
@@ -369,15 +373,21 @@ views/
   "name": "my-vue-app",
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.5.19",
-    "element-plus": "^2.10.7",
-    "pinia": "^3.0.3"
+    "preview": "vite preview",
+    "install:pnpm": "pnpm install",
+    "clean": "pnpm store prune",
+    "update": "pnpm update",
+    "add": "pnpm add",
+    "add-dev": "pnpm add -D",
+    "remove": "pnpm remove"
   }
 }
 ```
@@ -407,6 +417,14 @@ export default defineConfig({
 ```yaml
 packages:
   - "."
+  - "src/**"
+  - "components/**"
+  - "views/**"
+
+ignoredBuiltDependencies:
+  - "@parcel/watcher"
+  - esbuild
+  - vue-demi
 ```
 
 **作用**: 定义 pnpm 工作区配置，支持 monorepo 项目结构。

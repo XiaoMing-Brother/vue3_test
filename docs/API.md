@@ -4,6 +4,11 @@
 
 本项目使用 Axios 作为 HTTP 客户端，并封装了统一的请求处理、错误处理和重试机制。
 
+当前项目内存在两套请求封装：
+
+- `src/utils/http/`：基于 `VITE_API_URL` 与 `VITE_WITH_CREDENTIALS` 的通用封装，`src/api/usersApi.js` 使用该封装。
+- `src/utils/axios.js`：基于 `src/utils/config.js` 中的 `api` 前缀与 `sessionStorage` token 的封装，登录页使用该封装。
+
 ## HTTP 工具配置
 
 ### 基础配置
@@ -130,15 +135,18 @@ export class HttpError extends Error {
 // src/utils/http/status.js
 export const ApiStatus = {
   success: 200,
+  error: 400,
   unauthorized: 401,
   forbidden: 403,
   notFound: 404,
+  methodNotAllowed: 405,
   requestTimeout: 408,
   internalServerError: 500,
+  notImplemented: 501,
   badGateway: 502,
   serviceUnavailable: 503,
   gatewayTimeout: 504,
-  error: -1,
+  httpVersionNotSupported: 505,
 };
 ```
 
@@ -479,6 +487,8 @@ export function useUsers() {
 ```
 
 ## 环境配置
+
+> 仓库内未内置 `.env.*` 文件，使用 `src/utils/http/` 时请自行创建并填写。
 
 ### 开发环境
 

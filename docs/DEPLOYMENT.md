@@ -8,8 +8,8 @@
 
 ### 开发环境
 
-- **Node.js**: `^20.19.0` 或更高版本
-- **pnpm**: `^10.14.0` 或更高版本
+- **Node.js**: `>=16.0.0`
+- **pnpm**: `>=8.0.0`（项目 packageManager: `pnpm@8.15.0`）
 - **Git**: 用于版本控制
 
 ### 生产环境
@@ -57,10 +57,7 @@ VITE_APP_TITLE=Vue 管理系统
 
 ```bash
 # 构建生产环境版本
-pnpm build:prod
-
-# 或构建开发环境版本
-pnpm build:dev
+pnpm build
 
 # 预览构建结果
 pnpm preview
@@ -248,7 +245,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # 构建应用
-RUN pnpm build:prod
+RUN pnpm build
 
 # 生产阶段
 FROM nginx:alpine
@@ -657,7 +654,7 @@ jobs:
         run: npm install -g pnpm && pnpm install
 
       - name: Build
-        run: pnpm build:prod
+        run: pnpm build
 
       - name: Deploy to server
         uses: appleboy/scp-action@v0.1.4
@@ -701,7 +698,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pnpm build:prod'
+                sh 'pnpm build'
             }
         }
 
